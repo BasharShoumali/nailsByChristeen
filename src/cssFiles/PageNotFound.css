@@ -1,0 +1,127 @@
+:root {
+  --brand-bg: #eecfc6;
+  --brand-text: #2b2b2b;
+  --accent: #dc3545;
+  --link-bg: #007bff;
+  --link-bg-hover: #0056b3;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--brand-bg);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  animation: fadeInPage 1s ease-out forwards;
+}
+
+/* Page fade-in */
+@keyframes fadeInPage {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Center content */
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2vw; /* Fluid padding for all screens */
+  background-color: var(--brand-bg);
+}
+
+/* Main box */
+.error-content {
+  text-align: center;
+  padding: clamp(1rem, 3vw, 2rem);
+  background-color: var(--brand-text);
+  color: var(--brand-bg);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.1);
+  animation: pulseGlow 4s ease-in-out infinite;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: min(90%, 500px); /* Max width but scales down on small screens */
+}
+
+.error-content:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 255, 255, 0.15);
+}
+
+/* Glowing animation */
+@keyframes pulseGlow {
+  0%,
+  100% {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6),
+      0 0 30px rgba(255, 255, 255, 0.15);
+  }
+}
+
+/* Heading animation */
+.error-content h1 {
+  font-size: clamp(3rem, 12vw, 6rem);
+  margin: 0;
+  color: var(--accent);
+  opacity: 0;
+  transform: translateY(-30px);
+  animation: slideInTop 1s ease-out 0.3s forwards;
+}
+
+/* Paragraph animation */
+.error-content p {
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  margin: 1rem 0;
+  color: var(--brand-bg);
+  opacity: 0;
+  transform: translateY(30px);
+  animation: slideInBottom 1s ease-out 0.5s forwards;
+}
+
+/* Button animation */
+.home-link {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: clamp(0.5rem, 2vw, 0.75rem) clamp(1rem, 3vw, 1.5rem);
+  background-color: var(--link-bg);
+  color: var(--brand-text);
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  animation: fadeInLate 1s ease-out 0.8s forwards;
+}
+
+.home-link:hover {
+  background-color: var(--link-bg-hover);
+  transform: scale(1.05) translateY(-3px);
+}
+
+/* Animations */
+@keyframes slideInTop {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInBottom {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLate {
+  to {
+    opacity: 1;
+  }
+}

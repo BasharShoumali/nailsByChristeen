@@ -1,0 +1,474 @@
+/* AdminUsers.css — same palette, now fully responsive */
+:root {
+  /* Brand (previous) */
+  --brand-bg: #eecfc6;
+  --brand-text: #2b2b2b;
+  --brand-accent: #dc3545;
+
+  /* Derived */
+  --bg: var(--brand-bg);
+  --text: var(--brand-text);
+  --accent: var(--brand-accent);
+
+  --ring: color-mix(in oklab, var(--accent) 40%, #fff 60%);
+  --muted: color-mix(in oklab, var(--text) 20%, #fff 80%);
+
+  --elev-1: color-mix(in oklab, var(--bg) 88%, #000 12%);
+  --elev-2: color-mix(in oklab, var(--bg) 80%, #000 20%);
+
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+
+  --good: #1fa37c;
+  --bad: var(--accent);
+
+  /* Navbar offset for modal placement */
+  --nav-offset: 72px;
+}
+
+/* Shell */
+.au-scope {
+  color: var(--text);
+  background:
+    radial-gradient(1000px 600px at 5% -10%, #ffffffbb, transparent 60%),
+    radial-gradient(900px 600px at 110% 0%, #ffffff7a, transparent 55%),
+    var(--bg);
+  padding: 18px;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Inter", Segoe UI, Roboto, sans-serif;
+}
+
+/* Toolbar */
+.au-toolbar {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid color-mix(in oklab, var(--accent) 26%, #000 6%, #fff 68%);
+}
+.au-title h1 {
+  margin: 0;
+  font-weight: 900;
+  letter-spacing: .2px;
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  color: var(--accent);
+}
+.au-muted { color: var(--muted); }
+.au-subtitle { color: var(--text); font-weight: 800; }
+.au-username { color: var(--text) !important; font-weight: 800; }
+
+.au-actions {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.au-search {
+  border: 1.5px solid color-mix(in oklab, var(--accent) 14%, #000 10%);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  background: #fff;
+  color: var(--text);
+  min-width: 220px;
+  outline: none;
+}
+.au-search:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 6px color-mix(in oklab, var(--ring) 58%, #fff 42%);
+}
+
+/* Pills */
+.au-pill {
+  font-size: .82rem;
+  border-radius: 999px;
+  padding: 6px 10px;
+  border: 1px solid var(--ring);
+  background: #fff;
+  color: var(--text);
+  line-height: 1;
+}
+.au-pill.au-error { border-color: #c84c56; color: #c84c56; }
+
+/* Table */
+.au-table-wrap {
+  background: linear-gradient(180deg, var(--elev-1), var(--elev-2));
+  border: 1px solid color-mix(in oklab, var(--accent) 14%, #000 10%);
+  border-radius: var(--radius-lg);
+  padding: 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  overflow: hidden;
+}
+
+.au-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.au-table thead th {
+  text-align: left;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .55px;
+  font-size: 12.5px;
+  color: color-mix(in oklab, var(--text) 88%, #000 12%);
+  padding: 12px 14px;
+  background:
+    linear-gradient(180deg,
+    color-mix(in oklab, #fff 82%, var(--accent) 18%),
+    color-mix(in oklab, #fff 92%, var(--accent) 8%));
+}
+.au-table tbody td {
+  padding: 12px 14px;
+  border-top: 1px solid color-mix(in oklab, var(--accent) 12%, #000 12%);
+  font-weight: 700;
+  color: color-mix(in oklab, var(--text) 98%, #000 2%);
+}
+.au-table tbody tr:nth-child(even) td {
+  background: color-mix(in oklab, #fff 6%, var(--elev-2) 94%);
+}
+.au-table tbody tr:hover td {
+  background: color-mix(in oklab, #fff 9%, var(--elev-1) 91%);
+}
+.au-num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* Actions column */
+.au-table thead th.au-col-actions { text-align: center; width: 220px; }
+.au-actions-cell { text-align: center; vertical-align: middle; }
+.au-btn-group { display: inline-flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+/* Buttons */
+.au-btn {
+  --btn-bg: #fff;
+  --btn-border: color-mix(in oklab, var(--accent) 22%, #000 12%);
+  --btn-text: color-mix(in oklab, var(--text) 90%, #000 10%);
+
+  border: 1.5px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  padding: 9px 12px;
+  border-radius: 12px;
+  font-weight: 800;
+  letter-spacing: .2px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+}
+.au-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(0,0,0,.12); }
+.au-btn:active { transform: none; filter: brightness(.98); }
+.au-btn[disabled] { opacity: .6; cursor: not-allowed; box-shadow: none; transform: none; }
+
+.au-btn.au-primary {
+  --btn-bg: linear-gradient(180deg,
+              color-mix(in oklab, #fff 70%, var(--accent) 30%),
+              color-mix(in oklab, #fff 90%, var(--accent) 10%));
+  --btn-border: color-mix(in oklab, var(--accent) 55%, #000 10%);
+  --btn-text: #3a0d12;
+}
+.au-btn.au-secondary {
+  --btn-bg: #fff;
+  --btn-border: color-mix(in oklab, var(--accent) 28%, #000 12%);
+}
+
+/* Status chips */
+.au-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  border: 1px solid #d0d0d0;
+  background: #fff;
+}
+.au-badge.au-open     { color: #0b5; border-color: #bdecd6; background: #e9fbf2; }
+.au-badge.au-closed   { color: #0a3; border-color: #b4e3c6; background: #e7f7ee; }
+.au-badge.au-canceled { color: #b00; border-color: #f1c0c0; background: #fdeaea; }
+
+/* ============================ MODALS ============================ */
+.au-modal-backdrop {
+  position: fixed; inset: 0; z-index: 1000;
+  display: grid;
+  align-items: flex-start;   /* push down for navbar */
+  justify-items: center;
+  padding-top: var(--nav-offset);
+  background:
+    radial-gradient(1200px 800px at 50% -10%, rgba(255,255,255,.25), transparent 60%),
+    radial-gradient(900px 900px at 110% 110%, rgba(255,255,255,.15), transparent 45%),
+    rgba(12, 12, 16, 0.42);
+  backdrop-filter: blur(6px) saturate(1.02);
+  animation: au-fade 180ms ease-out;
+}
+
+.au-modal {
+  display: flex; flex-direction: column;
+  width: min(960px, calc(100vw - 40px));
+  max-height: 86vh;
+  color: var(--text);
+  background:
+    linear-gradient(180deg,
+      color-mix(in oklab, #fff 84%, var(--accent) 16%),
+      color-mix(in oklab, #fff 92%, var(--accent) 8%));
+  border-radius: 20px;
+  border: 1px solid color-mix(in oklab, var(--accent) 25%, #000 8%);
+  box-shadow:
+    0 18px 60px rgba(0, 0, 0, .22),
+    0 2px 6px rgba(0, 0, 0, .08);
+  overflow: hidden;
+  position: relative;
+  isolation: isolate;
+  animation: au-pop 220ms cubic-bezier(.2,.8,.2,1);
+}
+.au-modal::before {
+  content: "";
+  position: absolute; inset: -1px; z-index: -1;
+  border-radius: 22px;
+  background:
+    linear-gradient(135deg,
+      color-mix(in oklab, var(--accent) 45%, #fff 55%),
+      color-mix(in oklab, #fff 85%, var(--accent) 15%));
+  filter: blur(12px) opacity(.22);
+}
+
+/* Header */
+.au-modal-head {
+  display: grid;
+  grid-template-columns: 44px 1fr 36px;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px 8px;
+}
+.au-modal-icon {
+  width: 44px; height: 44px;
+  display: grid; place-items: center;
+  border-radius: 12px;
+  font-weight: 900;
+  background:
+    linear-gradient(180deg,
+      color-mix(in oklab, #fff 70%, var(--accent) 30%),
+      color-mix(in oklab, #fff 90%, var(--accent) 10%));
+  border: 1px solid color-mix(in oklab, var(--accent) 40%, #000 10%);
+  box-shadow: 0 6px 16px rgba(0,0,0,.12);
+}
+.au-modal-titles h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: .2px;
+  color: color-mix(in oklab, var(--text) 95%, #000 5%);
+}
+.au-modal-sub {
+  margin: 2px 0 0 0;
+  color: color-mix(in oklab, var(--text) 70%, #000 30%);
+  font-weight: 700;
+  font-size: .9rem;
+}
+.au-username { color: var(--text) !important; font-weight: 800; }
+.au-icon-btn {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  border: 1px solid color-mix(in oklab, var(--accent) 30%, #000 12%);
+  background: #fff;
+  color: color-mix(in oklab, var(--text) 80%, #000 20%);
+  font-size: 20px; line-height: 1; font-weight: 800;
+  display: grid; place-items: center;
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+.au-icon-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(0,0,0,.12); }
+
+.au-modal-divider {
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    color-mix(in oklab, var(--accent) 50%, #000 6%),
+    transparent);
+  margin: 0 10px 6px;
+  border-radius: 999px;
+}
+
+/* Body (scrollable) */
+.au-modal-body {
+  flex: 1 1 auto;
+  overflow: auto;
+  padding: 12px 16px 16px;
+  -webkit-overflow-scrolling: touch;
+}
+.au-modal-body::-webkit-scrollbar { height: 10px; width: 10px; }
+.au-modal-body::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--accent) 24%, #000 8%);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.au-modal-body::-webkit-scrollbar-track { background: transparent; }
+
+/* Footer (sticky) */
+.au-modal-actions {
+  flex: 0 0 auto;
+  position: sticky; bottom: 0;
+  display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap;
+  padding: 10px 14px 14px;
+  background:
+    linear-gradient(180deg,
+      color-mix(in oklab, #fff 90%, var(--accent) 10%),
+      color-mix(in oklab, #fff 96%, var(--accent) 4%));
+  border-top: 1px solid color-mix(in oklab, var(--accent) 16%, #000 10%);
+}
+
+/* Form grid in add-appointment */
+.au-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.au-field {
+  display: grid; gap: 6px;
+}
+.au-field > span {
+  font-size: .82rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: color-mix(in oklab, var(--text) 75%, #000 25%);
+}
+.au-field input[type="date"],
+.au-field select {
+  width: 100%;
+  background: #fff;
+  color: #111;
+  border: 1.5px solid color-mix(in oklab, var(--accent) 18%, #000 12%);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-weight: 800;
+  letter-spacing: .2px;
+  outline: none;
+  transition: border-color 140ms ease, box-shadow 140ms ease, transform 120ms ease;
+}
+.au-field input[type="date"]:focus,
+.au-field select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 6px color-mix(in oklab, var(--ring) 60%, #fff 40%);
+}
+
+/* Form messages */
+.au-form-err,
+.au-form-ok {
+  grid-column: 1 / -1;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-weight: 800;
+}
+.au-form-err {
+  background: color-mix(in oklab, var(--accent) 16%, #fff 84%);
+  border: 1px solid color-mix(in oklab, var(--accent) 50%, #000 12%);
+  color: #5b0a12;
+}
+.au-form-ok {
+  background: color-mix(in oklab, #1fa37c 18%, #fff 82%);
+  border: 1px solid color-mix(in oklab, #1fa37c 50%, #000 12%);
+  color: #0f2a18;
+}
+
+/* Animations */
+@keyframes au-fade { from { opacity: 0 } to { opacity: 1 } }
+@keyframes au-pop {
+  0% { transform: translateY(8px) scale(.98); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* ======================= RESPONSIVE BREAKPOINTS ======================= */
+
+/* Laptops/tablets: tighten action column, inputs fit */
+@media (max-width: 1024px) {
+  .au-table thead th.au-col-actions { width: 200px; }
+  .au-search { min-width: 180px; }
+}
+
+/* Modal + form go single-column */
+@media (max-width: 820px) {
+  .au-form-grid { grid-template-columns: 1fr; }
+  .au-table thead th.au-col-actions { width: 180px; }
+}
+
+/* Compact buttons & inputs on small tablets / large phones */
+@media (max-width: 680px) {
+  .au-btn { padding: 8px 10px; font-size: .95rem; }
+  .au-search { min-width: 0; width: 100%; }
+}
+
+/* Phone: transform tables into stacked "cards" (both main + history tables) */
+@media (max-width: 760px) {
+  .au-table thead { display: none; }
+
+  .au-table,
+  .au-table tbody,
+  .au-table tr,
+  .au-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .au-table tr {
+    margin: 10px 0 14px;
+    border: 1px solid color-mix(in oklab, var(--accent) 14%, #000 10%);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: #fff; /* keeps contrast/legibility over gradient wrap */
+    box-shadow: 0 8px 18px rgba(0,0,0,.08);
+  }
+
+  .au-table tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    border-top: 1px solid color-mix(in oklab, var(--accent) 12%, #000 12%);
+  }
+
+  .au-table tbody td:first-child {
+    border-top: none;
+    background: color-mix(in oklab, #fff 96%, var(--accent) 4%);
+  }
+
+  .au-table tbody td::before {
+    content: attr(data-label);
+    font-weight: 900;
+    letter-spacing: .2px;
+    margin-right: 10px;
+    color: color-mix(in oklab, var(--text) 90%, #000 10%);
+  }
+
+  .au-actions-cell .au-btn-group {
+    justify-content: flex-end;
+    width: 100%;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+}
+
+/* Tiny phones: increase modal width usage & reduce offset */
+@media (max-width: 720px) {
+  :root { --nav-offset: 56px; }
+
+  .au-modal {
+    width: calc(100vw - 20px);
+    border-radius: 16px;
+  }
+
+  .au-modal-head {
+    grid-template-columns: 40px 1fr 32px;
+    gap: 10px;
+  }
+  .au-modal-icon { width: 40px; height: 40px; }
+  .au-icon-btn { width: 32px; height: 32px; font-size: 18px; }
+}
+
+/* Very small phones */
+@media (max-width: 380px) {
+  .au-btn { width: 100%; }
+  .au-actions { gap: 8px; }
+}

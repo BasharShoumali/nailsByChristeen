@@ -1,0 +1,363 @@
+/* Reports.css */
+:root {
+  /* Brand (soft + high contrast) */
+  --brand-bg: #eecfc6;
+  --brand-text: #0a0a0a;         /* darker base text */
+  --brand-accent: #a95a63;
+  --brand-accent-deep: #7b474f;
+
+  /* Derived */
+  --bg: var(--brand-bg);
+  --text: var(--brand-text);     /* main text everywhere */
+  --accent: var(--brand-accent);
+  --accent-2: var(--brand-accent-deep);
+
+  /* Bar colors for Recharts (use in JSX via fill="var(--bar-…)" or via .bar-… classes) */
+  --bar-appts: #22856f;
+  --bar-appts-hover: #1b6d5b;
+  --bar-revenue: var(--accent);
+  --bar-revenue-hover: var(--accent-2);
+
+  /* Surfaces */
+  --elev-1: color-mix(in oklab, var(--bg) 60%, #fff 40%);
+  --elev-2: color-mix(in oklab, var(--bg) 45%, #fff 55%);
+  --muted: color-mix(in oklab, var(--text) 85%, #fff 15%);  /* darker muted */
+  --ring: color-mix(in oklab, var(--accent) 45%, #000 5%, #fff 50%);
+
+  /* Layout & sizing */
+  --page-max: 1200px;
+  --pad-x: clamp(12px, 2.5vw, 24px);
+  --gap: 12px;
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+
+  /* Chart height adapts to screen size */
+  --chart-h: clamp(260px, 42vh, 380px);
+}
+
+/* Page shell */
+.rep-wrap {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--pad-x);
+  color: var(--brand-accent);
+  background: var(--bg);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Inter", Segoe UI,
+    Roboto, sans-serif;
+}
+
+/* Toolbar */
+.rep-toolbar {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: var(--gap);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid color-mix(in oklab, var(--accent) 25%, #000 5%, #fff 70%);
+}
+.rep-title h1 {
+  margin: 0;
+  font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+  font-weight: 720;
+  color: var(--accent);
+  line-height: 1.2;
+}
+.rep-title p {
+  margin: 4px 0 0 0;
+  color: var(--brand-accent);
+  font-size: clamp(0.85rem, 1.6vw, 0.95rem);
+}
+
+.rep-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.rep-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: var(--brand-accent);
+  min-width: 150px;
+}
+.rep-field input[type="month"] {
+  padding: 10px 12px;
+  border: 1px solid var(--ring);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  background: #fff;
+  color: var(--text);
+  outline: none;
+  min-width: 160px;
+}
+.rep-field input[type="month"]:focus {
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 18%, #fff 82%);
+  border-color: var(--accent);
+}
+
+/* Pills */
+.pill {
+  font-size: 0.8rem;
+  border-radius: 999px;
+  padding: 6px 10px;
+  border: 1px solid var(--ring);
+  background: #fff;
+  color: var(--text);
+  line-height: 1;
+}
+.pill.error {
+  border-color: #c84c56;
+  color: #8f2f37;  /* darker error text */
+}
+.pill.warn {
+  border-color: var(--accent);
+  color: var(--accent-2); /* slightly deeper accent for text */
+}
+
+/* KPI grid */
+.rep-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(140px, 1fr));
+  gap: var(--gap);
+  margin-bottom: 20px;
+}
+.kpi {
+  background: var(--elev-1);
+  border: 1px solid var(--ring);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  text-align: center;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.kpi:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+.kpi-label {
+  font-size: 0.86rem;
+  color: var(--brand-accent);
+  margin-bottom: 6px;
+}
+.kpi-value {
+  font-size: clamp(1.2rem, 2.4vw, 1.5rem);
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* Report cards — with extra bottom space under EACH report */
+.rep-card {
+  background: var(--elev-2);
+  border: 1px solid var(--ring);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  margin-bottom: 32px; /* space under each report */
+  overflow: hidden; /* keeps internal legend/tooltip inside the card on phones */
+}
+
+.rep-card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.rep-card-head h2 {
+  margin: 0;
+  font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+  font-weight: 650;
+  color: #DC3545;
+}
+.rep-card-head p {
+  margin: 4px 0 12px;
+  color: #DC3545;
+  font-size: 0.9rem;
+}
+
+/* Chart container */
+.chart {
+  width: 100%;
+  height: var(--chart-h);
+  position: relative; /* allow us to manage legend inside */
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 8px;
+}
+
+/* Recharts grid & text */
+.chart .recharts-cartesian-grid line {
+  stroke: #00000014;
+}
+.chart .recharts-cartesian-axis-tick-value {
+  fill: var(--text);
+  opacity: 1;              /* darker labels */
+  font-size: 12px;
+}
+.chart .recharts-legend-item-text {
+  color: var(--text) !important;
+  opacity: 1;              /* darker legend */
+}
+.chart .recharts-tooltip-wrapper {
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.12));
+}
+.chart .recharts-default-tooltip {
+  background: #fff !important;
+  border: 1px solid var(--ring) !important;
+  color: #0c0c0c !important;       /* darker tooltip text */
+  border-radius: 8px !important;
+}
+
+/* Keep the LEGEND inside the card on small screens */
+.chart .recharts-legend-wrapper {
+  position: static !important; /* make legend take normal flow */
+  margin-top: 10px; /* space from chart area */
+  width: 100% !important;
+  text-align: center;
+}
+
+/* Bar hover colors via classes */
+.chart .bar-appts .recharts-rectangle path:hover,
+.chart .bar-appts .recharts-rectangle:hover {
+  fill: var(--bar-appts-hover) !important;
+}
+.chart .bar-revenue .recharts-rectangle path:hover,
+.chart .bar-revenue .recharts-rectangle:hover {
+  fill: var(--bar-revenue-hover) !important;
+}
+
+/* Subtle entrances */
+.fade-up {
+  animation: fadeUp 0.28s ease-out;
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ====================== RESPONSIVE BREAKPOINTS ====================== */
+
+/* Big desktop ≥1440px */
+@media (min-width: 1440px) {
+  :root {
+    --chart-h: 420px;
+  }
+  .rep-kpis {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Laptops 1024–1439px */
+@media (max-width: 1280px) {
+  .rep-kpis {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Tablets ≤ 1024px */
+@media (max-width: 1024px) {
+  .rep-toolbar {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .rep-controls {
+    justify-content: flex-start;
+  }
+  :root {
+    --chart-h: 340px;
+  }
+}
+
+/* iPad Air/Mini portrait (834/820/768px) */
+@media (max-width: 834px) {
+  .rep-kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .rep-field {
+    min-width: 140px;
+  }
+  :root {
+    --chart-h: 320px;
+  }
+}
+@media (max-width: 768px) {
+  .rep-kpis {
+    gap: 10px;
+  }
+  .rep-field input[type="month"] {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+/* Large phones 600–740px */
+@media (max-width: 700px) {
+  .rep-controls {
+    gap: 8px;
+  }
+  .rep-field {
+    width: clamp(180px, 46vw, 240px);
+  }
+  :root {
+    --chart-h: 300px;
+  }
+}
+
+/* Phones ≤ 480px */
+@media (max-width: 480px) {
+  .rep-wrap {
+    padding: 14px;
+  }
+  .rep-title h1 {
+    font-size: 1.15rem;
+  }
+  .rep-title p {
+    font-size: 0.85rem;
+  }
+  .rep-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .rep-field {
+    width: 100%;
+  }
+  .pill {
+    align-self: flex-start;
+  }
+  .rep-kpis {
+    grid-template-columns: 1fr;
+  }
+  :root {
+    --chart-h: 280px;
+  }
+}
+
+/* Small phones ≤ 360px */
+@media (max-width: 360px) {
+  .rep-wrap {
+    padding: 12px;
+  }
+  .rep-card {
+    padding: 12px;
+    overflow: hidden;
+  }
+  :root {
+    --chart-h: 260px;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .fade-up,
+  .kpi {
+    animation: none !important;
+    transition: none !important;
+  }
+}

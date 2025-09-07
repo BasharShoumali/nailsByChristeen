@@ -1,0 +1,331 @@
+/* ================== Schedule / MyEvents (SCOPED + ANIMATED, SAFE) ================== */
+/* No dependency on extra classes to be visible. */
+
+.myevents {
+  /* brand (local fallbacks) */
+  --brand-bg-local: var(--brand-bg, #eecfc6);
+  --brand-text-local: var(--brand-text, #2b2b2b);
+  --brand-accent-local: var(--brand-accent, #dc3545);
+
+  /* palette (scoped) */
+  --bg: var(--brand-bg-local);
+  --text: var(--brand-text-local);
+  --accent: var(--brand-accent-local);
+  --accent-deep: color-mix(in oklab, var(--accent) 85%, #000 15%);
+  --muted: color-mix(in oklab, var(--text) 20%, #fff 80%);
+  --ring: color-mix(in oklab, var(--accent) 40%, #fff 60%);
+  --elev-1: color-mix(in oklab, var(--bg) 88%, #000 12%);
+  --elev-2: color-mix(in oklab, var(--bg) 80%, #000 20%);
+  --danger: var(--accent);
+
+  /* motion */
+  --t-fast: 120ms;
+  --t-med: 240ms;
+  --t-slow: 650ms;
+  --ease-spring: cubic-bezier(.2,.8,.2,1);
+  --ease-expo: cubic-bezier(.19,1,.22,1);
+
+  --radius: 14px;
+
+  padding: 16px;
+  color: var(--text);
+  background: var(--bg);
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow-x: hidden;
+
+  /* VISIBLE by default */
+  opacity: 1;
+  transform: none;
+}
+
+/* optional: if you later add .is-in on mount, it will animate nicely */
+.myevents.is-in { animation: me-fadeUp var(--t-slow) var(--ease-expo) both; }
+@keyframes me-fadeUp { from { opacity: 0; transform: translateY(8px) } to { opacity: 1; transform: none } }
+
+/* ------------------------------ Header ------------------------------ */
+.myevents__header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.myevents__title { margin: 0; font-size: 1.35rem; letter-spacing: .2px; }
+
+.myevents__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+.toolbar__spacer { flex: 1 1 auto; }
+
+.datepicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px;
+  background: #fff;
+  border: 1px solid var(--muted);
+  border-radius: 12px;
+  transition: box-shadow var(--t-med) var(--ease-spring), transform var(--t-med) var(--ease-spring);
+}
+.datepicker:focus-within {
+  box-shadow: 0 0 0 5px var(--ring);
+  transform: translateY(-1px);
+}
+.datepicker input[type="date"] {
+  border: 0;
+  padding: 6px 8px;
+  outline: none;
+  background: transparent;
+  font-size: 0.98rem;
+  color: var(--text);
+}
+
+/* ------------------------------- Alerts ------------------------------ */
+.myevents__error,
+.warn-banner,
+.ok-banner {
+  border-radius: 10px;
+  font-size: 0.95rem;
+  transform-origin: top;
+}
+.myevents__error {
+  margin: 10px 0;
+  padding: 10px 12px;
+  background: #fff3f3;
+  border: 1px solid #ffd0d0;
+  color: #b00020;
+}
+.warn-banner {
+  margin: 6px 0;
+  padding: 8px 10px;
+  background: #fff8e6;
+  border: 1px solid #ffe3a3;
+  color: #7a5a00;
+}
+.ok-banner {
+  margin-top: 8px;
+  padding: 8px 10px;
+  background: #effaf3;
+  border: 1px solid #cce9d5;
+  color: #1a7f37;
+}
+
+/* ------------------------------- Cards ------------------------------- */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(200px, 1fr));
+  gap: 12px;
+}
+.card {
+  border: 1px solid var(--muted);
+  background: #fff;
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.05);
+  display: grid;
+  gap: 10px;
+  transition: transform var(--t-med) var(--ease-spring), box-shadow var(--t-med) var(--ease-spring), border-color var(--t-med);
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px rgba(0,0,0,.08);
+}
+.card--closed {
+  background: color-mix(in oklab, #fff 86%, var(--accent) 14%);
+  border-color: color-mix(in oklab, #fff 60%, var(--accent) 40%);
+}
+.card--closed .card__label::after {
+  content: " • closed";
+  color: var(--accent);
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+.card__head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 8px;
+}
+.card__titles { min-width: 0; }
+.card__label { font-weight: 700; letter-spacing: .2px; }
+.card__time {
+  color: #555;
+  font-variant-numeric: tabular-nums;
+  margin-top: 2px;
+  transition: color var(--t-fast);
+}
+.card:hover .card__time { color: #333; }
+
+/* ------------------------------ Switch ------------------------------ */
+.switch {
+  --w: 48px; --h: 28px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.switch > input { position: absolute; opacity: 0; width: 0; height: 0; }
+.switch__track {
+  width: var(--w);
+  height: var(--h);
+  background: #ddd;
+  border-radius: 999px;
+  border: 1px solid #ccc;
+  display: inline-block;
+  position: relative;
+  transition: background var(--t-med) var(--ease-spring), border-color var(--t-med) var(--ease-spring);
+}
+.switch__thumb {
+  position: absolute;
+  top: 50%;
+  left: 4px;
+  width: calc(var(--h) - 8px);
+  height: calc(var(--h) - 8px);
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,.15);
+  transform: translate(0, -50%);
+  transition: transform var(--t-med) var(--ease-spring);
+}
+.switch > input:checked + .switch__track {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.switch > input:checked + .switch__track .switch__thumb {
+  transform: translate(calc(var(--w) - var(--h)), -50%) scale(1.03);
+  animation: me-thumbBounce var(--t-med) var(--ease-spring);
+}
+@keyframes me-thumbBounce {
+  0% { transform: translate(calc(var(--w) - var(--h) - 6px), -50%) scale(.95); }
+  60%{ transform: translate(calc(var(--w) - var(--h) + 2px), -50%) scale(1.06); }
+  100%{ transform: translate(calc(var(--w) - var(--h)), -50%) scale(1.03); }
+}
+
+/* --------------------------- Card actions --------------------------- */
+.card__actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.card__hint { color: #555; font-size: 0.92rem; }
+
+/* ------------------------------ Buttons ------------------------------ */
+.btn {
+  appearance: none;
+  border: 1px solid var(--muted);
+  background: #fff;
+  color: var(--text);
+  padding: 9px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden; /* ripple */
+  transition:
+    transform var(--t-fast) var(--ease-spring),
+    box-shadow var(--t-med) var(--ease-spring),
+    background var(--t-fast),
+    border-color var(--t-fast),
+    filter var(--t-fast);
+  white-space: nowrap;
+}
+.btn:hover { transform: translateY(-1.5px); box-shadow: 0 6px 18px rgba(0,0,0,.08); }
+.btn:active { transform: translateY(0); }
+.btn[disabled] { opacity: .6; cursor: default; }
+
+.btn.btn--accent { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn.btn--accent:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
+.btn.btn--danger { background: var(--danger); color: #fff; border-color: var(--danger); }
+.btn.btn--danger:hover { filter: brightness(.95); }
+
+/* ripple (centered, JS-free) */
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 0; height: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,.45);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+.btn:active::after { animation: me-ripple 500ms ease-out; }
+@keyframes me-ripple { 0%{ width:0;height:0;opacity:.5 } 100%{ width:300px;height:300px;opacity:0 } }
+
+.btn-group { display: inline-flex; gap: 8px; }
+.btn--lg { padding: 11px 16px; border-radius: 14px; font-weight: 700; letter-spacing: .2px; }
+
+/* optional busy pulse if you add .is-busy to .myevents */
+.myevents.is-busy .btn--accent,
+.myevents.is-busy .btn--danger {
+  animation: me-pulse 900ms var(--ease-spring) infinite;
+}
+@keyframes me-pulse {
+  0%,100% { filter: brightness(1); transform: translateY(-1px); }
+  50%     { filter: brightness(1.05); transform: translateY(-2px); }
+}
+
+.center { text-align: center; color: #666; }
+
+/* ---------------------------- TimesControl --------------------------- */
+.card__title { margin: 0; font-size: 1.1rem; }
+.times-card { margin-top: 14px; }
+
+.times-card__head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.times-meta { color: #666; }
+
+.times-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(160px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+.times-item { display: grid; gap: 6px; }
+.times-item > span { font-weight: 600; }
+
+.times-item input[type="time"] {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--muted);
+  background: #fff;
+  outline: none;
+  color: var(--text);
+  transition: box-shadow var(--t-med) var(--ease-spring), border-color var(--t-fast);
+}
+.times-item input[type="time"]:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 5px var(--ring);
+}
+
+.times-hint { margin-top: 8px; color: #555; font-size: 0.92rem; }
+
+/* ----------------------------- Responsive ---------------------------- */
+@media (max-width: 1100px) {
+  .cards { grid-template-columns: repeat(3, minmax(220px, 1fr)); }
+  .times-grid { grid-template-columns: repeat(3, minmax(180px, 1fr)); }
+}
+@media (max-width: 860px) {
+  .myevents__header { grid-template-columns: 1fr; }
+  .myevents__toolbar { justify-content: flex-start; }
+  .cards { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
+  .times-card__head { grid-template-columns: 1fr; }
+  .times-grid { grid-template-columns: repeat(2, minmax(180px, 1fr)); }
+}
+@media (max-width: 520px) {
+  .cards { grid-template-columns: 1fr; }
+  .datepicker { width: 100%; justify-content: space-between; }
+  .times-grid { grid-template-columns: 1fr; }
+}
+
+/* ----------------------- Respect reduced motion ---------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .myevents, .myevents * { animation: none !important; transition: none !important; }
+}
+
+/* keyframes used above */
+@keyframes me-floatIn { from { opacity:0; transform: translateY(6px) } to { opacity:1; transform:none } }

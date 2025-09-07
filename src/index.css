@@ -1,0 +1,35 @@
+/* Sticky footer scaffold */
+html,
+body,
+#root {
+  height: 100%;
+}
+
+.app-shell {
+  min-height: 100vh; /* fill the viewport */
+  display: flex; /* vertical layout */
+  flex-direction: column; /* header -> content -> footer */
+  background-color: #eecfc6; /* keep your background */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Your routed content expands to push footer down */
+.page-content {
+  flex: 1 0 auto;
+}
+
+/* Footer sits at the end of the column */
+.footer {
+  margin-top: auto; /* <— this pushes it to the bottom */
+  flex-shrink: 0;
+}
+
+/* (keep your other global rules) */
+body {
+  margin: 0;
+  padding: 0;
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
