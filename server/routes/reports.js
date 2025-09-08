@@ -50,7 +50,7 @@ r.get("/admin/reports/monthly", async (req, res) => {
         YEAR(workDate)  AS y,
         MONTH(workDate) AS m,
         COUNT(*) AS appts,
-        COALESCE(SUM(CASE WHEN status='closed' THEN paid_amount ELSE 0 END), 0) AS revenue
+        COALESCE(SUM(CASE WHEN status='closed' THEN paidAmount ELSE 0 END), 0) AS revenue
       FROM appointments
       WHERE DATE(workDate) >= ?
         AND DATE(workDate) < DATE_ADD(?, INTERVAL 1 MONTH)
