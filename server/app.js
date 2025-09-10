@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json({ limit: "256kb" }));
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:3000"],
+    origin: ["http://localhost:5173", "http://localhost:3000", "https://basharshoumali.github.io"],
     credentials: false,
   })
 );
