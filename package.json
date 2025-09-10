@@ -2,6 +2,7 @@
   "name": "nails-by-christeen",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://BasharShoumali.github.io/nailsByChristeen",
   "proxy": "http://localhost:4000",
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
